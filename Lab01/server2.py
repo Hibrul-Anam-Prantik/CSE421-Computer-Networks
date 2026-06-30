@@ -29,7 +29,14 @@ while True:
                 conn.send("Connection terminated by server.".encode(format))
                 print("Closing connection with (client): {}".format(client_soc_address))
             else:
-                conn.send("Message received.".encode(format))
-                print("Acknowledged receipt of message from (client): {}".format(client_soc_address))
-                print("Received message from client: {}".format(msg))
+                vowel = "aeiouAEIOU"
+                count = 0
+                for i in msg: 
+                    if i in vowel:
+                        count += 1
+                if count == 0:
+                    conn.send("No vowels found in the message.".encode(format))
+                else:
+                    conn.send("Number of vowels in the message: {}".format(count).encode(format))
+
     conn.close()

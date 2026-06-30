@@ -1,4 +1,5 @@
 import socket
+import threading
 
 port = 5050
 buffer = 16
@@ -12,8 +13,7 @@ server.bind(server_soc_address)
 server.listen()
 print("Server is listening on IP: {}, PORT: {}".format(server_ip_address, port))
 
-while True:
-    conn, client_soc_address = server.accept()
+def client_in_different_thread(conn, client_soc_address):
     print("Accepted connection from (client): {}".format(client_soc_address))
     connected = True
     while connected:
@@ -29,7 +29,19 @@ while True:
                 conn.send("Connection terminated by server.".encode(format))
                 print("Closing connection with (client): {}".format(client_soc_address))
             else:
-                conn.send("Message received.".encode(format))
-                print("Acknowledged receipt of message from (client): {}".format(client_soc_address))
-                print("Received message from client: {}".format(msg))
+                vowel = "aeiouAEIOU"
+                count = 0
+                for i in msg: 
+                    if i in vowel:
+                        count += 1
+                if count == 0:
+                    conn.send("No vowels found in the message.".encode(format))
+                else:
+                    conn.send("Number of vowels in the message: {}".format(count).encode(format))
+
     conn.close()
+    
+while True:
+    conn, client_soc_address = server.accept()
+    thread = threading.Thread(target=client_in_different_thread, args=(conn, client_soc_address))
+    thread.start()
