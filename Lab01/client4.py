@@ -25,5 +25,6 @@ def sending_encoded_message(msg):
     sent_from_server = client.recv(2048).decode(format)
     print("Sent from server: {}".format(sent_from_server))
 
-sending_encoded_message(f"Hello! My IP address is {client_ip_address}, and device name is {hostname}.")
+sending_encoded_message("40")
+sending_encoded_message("45")
 sending_encoded_message("Terminated")

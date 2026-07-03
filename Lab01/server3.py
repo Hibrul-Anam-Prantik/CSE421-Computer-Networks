@@ -35,9 +35,11 @@ def client_in_different_thread(conn, client_soc_address):
                     if i in vowel:
                         count += 1
                 if count == 0:
-                    conn.send("No vowels found in the message.".encode(format))
+                    conn.send("Not enough vowels".encode(format))
+                elif count <= 2:
+                    conn.send("Enough vowels I guess".encode(format))
                 else:
-                    conn.send("Number of vowels in the message: {}".format(count).encode(format))
+                    conn.send("Too many vowels".encode(format))
 
     conn.close()
     

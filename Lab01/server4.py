@@ -29,16 +29,14 @@ while True:
                 conn.send("Connection terminated by server.".encode(format))
                 print("Closing connection with (client): {}".format(client_soc_address))
             else:
-                vowel = "aeiouAEIOU"
-                count = 0
-                for i in msg: 
-                    if i in vowel:
-                        count += 1
-                if count == 0:
-                    conn.send("Not enough vowels".encode(format))
-                elif count <= 2:
-                    conn.send("Enough vowels I guess".encode(format))
-                else:
-                    conn.send("Too many vowels".encode(format))
+                try:
+                    hours = int(msg)
+                    if hours <= 40:
+                        salary = hours * 200
+                    else:
+                        salary = 8000 + (hours - 40) * 300
+                    conn.send("Salary: Tk {}".format(salary).encode(format))
+                except ValueError:
+                    conn.send("Invalid input for hours.".encode(format))
 
     conn.close()
