@@ -25,6 +25,8 @@ def sending_encoded_message(msg):
     sent_from_server = client.recv(2048).decode(format)
     print("Sent from server: {}".format(sent_from_server))
 
-sending_encoded_message("40")
-sending_encoded_message("45")
-sending_encoded_message("Terminated")
+while True:
+    hours = input("Enter hours worked (or 'Terminated' to exit): ")
+    sending_encoded_message(hours)
+    if hours == "Terminated":
+        break
